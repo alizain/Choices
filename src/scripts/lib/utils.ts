@@ -1,4 +1,4 @@
-import { EventMap, Choice } from '../interfaces';
+import { EventMap, Choice, ClassNameValue } from '../interfaces';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -178,3 +178,30 @@ export const diff = (
 
   return aKeys.filter(i => bKeys.indexOf(i) < 0);
 };
+
+function collateClassNameValues(classNameValues: ClassNameValue[]): string[] {
+  return classNameValues.reduce((prev: string[], next: ClassNameValue) => {
+    if (typeof next === 'string') {
+      prev.push(next);
+      return prev;
+    } else if (Array.isArray(next)) {
+      return prev.concat(next);
+    } else {
+      return prev;
+    }
+  }, []) as string[];
+}
+
+export function addClasses(
+  el: Element,
+  ...classNameValues: ClassNameValue[]
+): void {
+  el.classList.add(...collateClassNameValues(classNameValues));
+}
+
+export function removeClasses(
+  el: Element,
+  ...classNameValues: ClassNameValue[]
+): void {
+  el.classList.remove(...collateClassNameValues(classNameValues));
+}

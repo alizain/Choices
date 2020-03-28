@@ -1,4 +1,4 @@
-import { wrap } from '../lib/utils';
+import { wrap, addClasses, removeClasses } from '../lib/utils';
 import { SELECT_ONE_TYPE } from '../constants';
 import { PassedElement, ClassNames, Options } from '../interfaces';
 
@@ -78,25 +78,25 @@ export default class Container {
   }
 
   open(dropdownPos: number): void {
-    this.element.classList.add(this.classNames.openState);
+    addClasses(this.element, this.classNames.openState);
     this.element.setAttribute('aria-expanded', 'true');
     this.isOpen = true;
 
     if (this.shouldFlip(dropdownPos)) {
-      this.element.classList.add(this.classNames.flippedState);
+      addClasses(this.element, this.classNames.flippedState);
       this.isFlipped = true;
     }
   }
 
   close(): void {
-    this.element.classList.remove(this.classNames.openState);
+    removeClasses(this.element, this.classNames.openState);
     this.element.setAttribute('aria-expanded', 'false');
     this.removeActiveDescendant();
     this.isOpen = false;
 
     // A dropdown flips if it does not have space within the page
     if (this.isFlipped) {
-      this.element.classList.remove(this.classNames.flippedState);
+      removeClasses(this.element, this.classNames.flippedState);
       this.isFlipped = false;
     }
   }
@@ -108,15 +108,15 @@ export default class Container {
   }
 
   addFocusState(): void {
-    this.element.classList.add(this.classNames.focusState);
+    addClasses(this.element, this.classNames.focusState);
   }
 
   removeFocusState(): void {
-    this.element.classList.remove(this.classNames.focusState);
+    removeClasses(this.element, this.classNames.focusState);
   }
 
   enable(): void {
-    this.element.classList.remove(this.classNames.disabledState);
+    removeClasses(this.element, this.classNames.disabledState);
     this.element.removeAttribute('aria-disabled');
     if (this.type === SELECT_ONE_TYPE) {
       this.element.setAttribute('tabindex', '0');
@@ -125,7 +125,7 @@ export default class Container {
   }
 
   disable(): void {
-    this.element.classList.add(this.classNames.disabledState);
+    addClasses(this.element, this.classNames.disabledState);
     this.element.setAttribute('aria-disabled', 'true');
     if (this.type === SELECT_ONE_TYPE) {
       this.element.setAttribute('tabindex', '-1');
@@ -147,13 +147,13 @@ export default class Container {
   }
 
   addLoadingState(): void {
-    this.element.classList.add(this.classNames.loadingState);
+    addClasses(this.element, this.classNames.loadingState);
     this.element.setAttribute('aria-busy', 'true');
     this.isLoading = true;
   }
 
   removeLoadingState(): void {
-    this.element.classList.remove(this.classNames.loadingState);
+    removeClasses(this.element, this.classNames.loadingState);
     this.element.removeAttribute('aria-busy');
     this.isLoading = false;
   }

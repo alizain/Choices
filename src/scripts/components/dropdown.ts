@@ -1,4 +1,5 @@
 import { PassedElement, ClassNames } from '../interfaces';
+import { addClasses, removeClasses } from '../lib/utils';
 
 export default class Dropdown {
   element: HTMLElement;
@@ -36,7 +37,7 @@ export default class Dropdown {
    * Show dropdown to user by adding active state class
    */
   show(): this {
-    this.element.classList.add(this.classNames.activeState);
+    addClasses(this.element, this.classNames.activeState);
     this.element.setAttribute('aria-expanded', 'true');
     this.isActive = true;
 
@@ -47,7 +48,7 @@ export default class Dropdown {
    * Hide dropdown from user
    */
   hide(): this {
-    this.element.classList.remove(this.classNames.activeState);
+    removeClasses(this.element, this.classNames.activeState);
     this.element.setAttribute('aria-expanded', 'false');
     this.isActive = false;
 

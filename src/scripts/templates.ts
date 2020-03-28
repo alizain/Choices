@@ -1,4 +1,5 @@
 import { ClassNames, Item, Choice, Group, PassedElement } from './interfaces';
+import { addClasses, removeClasses } from './lib/utils';
 
 /**
  * Helpers to create HTML elements used by Choices
@@ -116,14 +117,14 @@ const templates = {
     }
 
     if (isPlaceholder) {
-      div.classList.add(placeholder);
+      addClasses(div, placeholder);
     }
 
-    div.classList.add(highlighted ? highlightedState : itemSelectable);
+    addClasses(div, highlighted ? highlightedState : itemSelectable);
 
     if (removeItemButton) {
       if (disabled) {
-        div.classList.remove(itemSelectable);
+        removeClasses(div, itemSelectable);
       }
       div.dataset.deletable = '';
       /** @todo This MUST be localizable, not hardcoded! */
@@ -230,11 +231,11 @@ const templates = {
     });
 
     if (isSelected) {
-      div.classList.add(selectedState);
+      addClasses(div, selectedState);
     }
 
     if (isPlaceholder) {
-      div.classList.add(placeholder);
+      addClasses(div, placeholder);
     }
 
     div.setAttribute('role', groupId && groupId > 0 ? 'treeitem' : 'option');
@@ -247,11 +248,11 @@ const templates = {
     });
 
     if (isDisabled) {
-      div.classList.add(itemDisabled);
+      addClasses(div, itemDisabled);
       div.dataset.choiceDisabled = '';
       div.setAttribute('aria-disabled', 'true');
     } else {
-      div.classList.add(itemSelectable);
+      addClasses(div, itemSelectable);
       div.dataset.choiceSelectable = '';
     }
 
@@ -283,7 +284,7 @@ const templates = {
   }: Pick<ClassNames, 'list' | 'listDropdown'>): HTMLDivElement {
     const div = document.createElement('div');
 
-    div.classList.add(list, listDropdown);
+    addClasses(div, list, listDropdown);
     div.setAttribute('aria-expanded', 'false');
 
     return div;

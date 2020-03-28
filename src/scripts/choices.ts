@@ -40,6 +40,8 @@ import {
   generateId,
   existsInArray,
   diff,
+  addClasses,
+  removeClasses,
 } from './lib/utils';
 import {
   Options,
@@ -1863,7 +1865,7 @@ class Choices {
 
     // Remove any highlighted choices
     highlightedChoices.forEach(choice => {
-      choice.classList.remove(this.config.classNames.highlightedState);
+      removeClasses(choice, this.config.classNames.highlightedState);
       choice.setAttribute('aria-selected', 'false');
     });
 
@@ -1884,7 +1886,7 @@ class Choices {
       }
     }
 
-    passedEl.classList.add(this.config.classNames.highlightedState);
+    addClasses(passedEl, this.config.classNames.highlightedState);
     passedEl.setAttribute('aria-selected', 'true');
     this.passedElement.triggerEvent(EVENTS.highlightChoice, { el: passedEl });
 
